@@ -2,7 +2,7 @@
 
 /* Pre:  Cert
    Post: Construeix un anagrama buit. */
-anagrames() throw(error)
+anagrames::anagrames() throw(error)
 {
 }
 
