@@ -11,8 +11,9 @@ anagrames::anagrames(const anagrames &A) throw(error)
 {
 }
 
-anagrames::anagrames anagrames::&operator=(const anagrames &A) throw(error)
+anagrames &anagrames::operator=(const anagrames &A) throw(error)
 {
+   return *this;
 }
 anagrames::~anagrames() throw()
 {

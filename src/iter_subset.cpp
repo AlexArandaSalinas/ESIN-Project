@@ -38,7 +38,7 @@ iter_subset::iter_subset(const iter_subset &its) throw(error)
    finished = its.finished;
 }
 
-iter_subset iter_subset::&operator=(const iter_subset &its) throw(error)
+iter_subset &iter_subset::operator=(const iter_subset &its) throw(error)
 {
    if (this != &its)
    {
@@ -82,14 +82,14 @@ subset iter_subset::operator*() const throw(error)
    Pre:  Cert
    Post: Avança l'iterador al següent subconjunt en la seqüència i el retorna;
    no es produeix l'avançament si l'iterador ja apuntava al sentinella. */
-iter_subset iter_subset::&operator++() throw()
+iter_subset &iter_subset::operator++() throw()
 {
    if (finished)
    {
       return *this;
    }
 
-   if (!next_combination(current, n))
+   if (!next_combination(n))
    {
       finished = true;
    }
@@ -103,14 +103,17 @@ iter_subset iter_subset::&operator++() throw()
    previ; no es produeix l'avançament si l'iterador ja apuntava al sentinella. */
 iter_subset iter_subset::operator++(int) throw()
 {
+   return *this; //FALTA HACERLO
 }
 
 /* Operadors relacionals. */
 bool iter_subset::operator==(const iter_subset &c) const throw()
 {
+   return true; //FALTA HACERLO
 }
 bool iter_subset::operator!=(const iter_subset &c) const throw()
 {
+   return true; //FALTA HACERLO
 }
 
 /*Metodes utilitat*/
@@ -120,6 +123,10 @@ bool iter_subset::operator!=(const iter_subset &c) const throw()
    Post:
 
 */
+bool next_combination(int n){
+   return true;
+}
+/*
 template <typename Iterator>
 bool next_combination(int n)
 {
@@ -138,7 +145,7 @@ bool next_combination(int n)
    }
    return false; // No hay más combinaciones posibles.
 }
-
+*/
 /* Pre: Entra un unsigned integer 'n'
    Post: Retorna el factorial de n.
 */

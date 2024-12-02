@@ -2,7 +2,7 @@
 
 bool word_toolkit::es_canonic(const string &s) throw()
 {
-    for (i = 0; i < s.len() - 1; i++)
+    for (unsigned int i = 0; i < s.len() - 1; i++)
     {
         if (s[i + 1] < s[i])
             return false;
@@ -18,7 +18,7 @@ string word_toolkit::anagrama_canonic(const string &s) throw()
 
 char word_toolkit::mes_frequent(const string &excl, const list<string> &L) throw()
 {
-    l = anagrama_canonic(L)
+    string l = anagrama_canonic(L)
     {
         int contador = 0;   // guarda el contador del caracter actual
         int max = 0;        // guarda el numero de veces que se repite el caracter más frecuente
