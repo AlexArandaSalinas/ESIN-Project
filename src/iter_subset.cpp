@@ -121,7 +121,7 @@ bool iter_subset::operator!=(const iter_subset &c) const throw()
 
 */
 template <typename Iterator>
-bool next_combination(Iterator first, Iterator last, int n)
+bool next_combination(int n)
 {
    int k = subset.size();
    for (int i = k - 1; i >= 0; --i)

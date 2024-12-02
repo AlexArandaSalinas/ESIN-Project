@@ -3,6 +3,6 @@ nat k;                     // Número de elementos en cada subconjunto.
 bool finished;             // Indica si se ha llegado al sentinela.
 std::vector<nat> current;  // El subconjunto actual representado como un vector de índices.
 
-bool next_combination(Iterator first, Iterator last, int n);
+bool next_combination(int n);
 
 unsigned long long factorial(unsigned int n);
