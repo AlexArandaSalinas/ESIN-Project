@@ -17,6 +17,10 @@
         "sstream": "cpp",
         "utility": "cpp",
         "error": "cpp",
-        "*.rep": "cpp"
+        "*.rep": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "system_error": "cpp"
     }
 }

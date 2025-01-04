@@ -6,31 +6,17 @@
 /* Pre:  Cert
    Post: Construeix un iterador sobre els subconjunts de k elements
    de {1, ..., n}; si k > n no hi ha res a recórrer. */
-iter_subset::iter_subset(nat n, nat k) throw(error)
+iter_subset::iter_subset(nat n, nat k) throw() : n(n), k(k), finished(false)
 {
-   if (k > n)
+   current.resize(k);
+   for (nat i = 0; i < k; ++i)
    {
-      this->n = n;
-      this->k = k;
-      finished = true; // No hay combinaciones posibles.
-   }
-   else
-   {
-      this->n = n;
-      this->k = k;
-      finished = false;
-
-      // Inicializar el primer subconjunto como los primeros `k` elementos.
-      current.resize(k);
-      for (nat i = 0; i < k; ++i)
-      {
-         current[i] = i + 1; // {1, 2, ..., k}
-      }
+      current[i] = i + 1;
    }
 }
 
 /* Tres grans. Constructor per còpia, operador d'assignació i destructor. */
-iter_subset::iter_subset(const iter_subset &its) throw(error)
+iter_subset::iter_subset(const iter_subset &its) throw()
 {
    n = its.n;
    k = its.k;
@@ -38,7 +24,7 @@ iter_subset::iter_subset(const iter_subset &its) throw(error)
    finished = its.finished;
 }
 
-iter_subset &iter_subset::operator=(const iter_subset &its) throw(error)
+iter_subset &iter_subset::operator=(const iter_subset &its) throw()
 {
    if (this != &its)
    {
@@ -69,7 +55,7 @@ bool iter_subset::end() const throw()
    Pre:  Cert
    Post: Retorna el subconjunt apuntat per l'iterador;
    llança un error si l'iterador apunta al sentinella. */
-subset iter_subset::operator*() const throw(error)
+subset iter_subset::operator*() const throw()
 {
    if (finished)
    {
@@ -103,17 +89,19 @@ iter_subset &iter_subset::operator++() throw()
    previ; no es produeix l'avançament si l'iterador ja apuntava al sentinella. */
 iter_subset iter_subset::operator++(int) throw()
 {
-   return *this; //FALTA HACERLO
+   iter_subset temp = *this;
+   ++(*this);
+   return temp;
 }
 
 /* Operadors relacionals. */
 bool iter_subset::operator==(const iter_subset &c) const throw()
 {
-   return true; //FALTA HACERLO
+   return (finished == c.finished) && (current == c.current);
 }
 bool iter_subset::operator!=(const iter_subset &c) const throw()
 {
-   return true; //FALTA HACERLO
+   return !(*this == c);
 }
 
 /*Metodes utilitat*/
@@ -123,7 +111,27 @@ bool iter_subset::operator!=(const iter_subset &c) const throw()
    Post:
 
 */
-bool next_combination(int n){
+
+template <typename Iterator>
+bool next_combination(int n)
+{
+   int i = k - 1;
+   while (i >= 0 && current[i] == n - k + i + 1)
+   {
+      --i;
+   }
+
+   if (i < 0)
+   {
+      return false;
+   }
+
+   ++current[i];
+   for (int j = i + 1; j < k; ++j)
+   {
+      current[j] = current[j - 1] + 1;
+   }
+
    return true;
 }
 /*
@@ -149,7 +157,7 @@ bool next_combination(int n)
 /* Pre: Entra un unsigned integer 'n'
    Post: Retorna el factorial de n.
 */
-unsigned long long factorial(unsigned int n)
+unsigned long long iter_subset::factorial(unsigned int n)
 {
    return n <= 1 ? 1 : n * factorial(n - 1);
 }
