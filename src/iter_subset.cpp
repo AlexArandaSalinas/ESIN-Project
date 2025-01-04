@@ -6,32 +6,40 @@
 /* Pre:  Cert
    Post: Construeix un iterador sobre els subconjunts de k elements
    de {1, ..., n}; si k > n no hi ha res a recórrer. */
-iter_subset::iter_subset(nat n, nat k) throw() : n(n), k(k), finished(false)
+iter_subset::iter_subset(nat n, nat k) throw(error)
 {
-   current.resize(k);
-   for (nat i = 0; i < k; ++i)
+   _n = n;
+   _k = k;
+   _finished = (k > n);
+
+   if (!_finished)
    {
-      current[i] = i + 1;
+      // Inicializar el primer subconjunto como los primeros `k` elementos.
+      _current.resize(k);
+      for (nat i = 0; i < k; ++i)
+      {
+         _current[i] = i + 1; // {1, 2, ..., k}
+      }
    }
 }
 
 /* Tres grans. Constructor per còpia, operador d'assignació i destructor. */
-iter_subset::iter_subset(const iter_subset &its) throw()
+iter_subset::iter_subset(const iter_subset &its) throw(error)
 {
-   n = its.n;
-   k = its.k;
-   current = its.current;
-   finished = its.finished;
+   _n = its._n;
+   _k = its._k;
+   _current = its._current;
+   _finished = its._finished;
 }
 
-iter_subset &iter_subset::operator=(const iter_subset &its) throw()
+iter_subset &iter_subset::operator=(const iter_subset &its) throw(error)
 {
    if (this != &its)
    {
-      n = its.n;
-      k = its.k;
-      finished = its.finished;
-      current = its.current; // Copiar el estado actual del subconjunto.
+      _n = its._n;
+      _k = its._k;
+      _finished = its._finished;
+      _current = its._current; // Copiar el estado actual del subconjunto.
    }
    return *this;
 }
@@ -48,20 +56,20 @@ iter_subset::~iter_subset() throw()
    que queda a continuació de l'últim subconjunt vàlid. */
 bool iter_subset::end() const throw()
 {
-   return finished;
+   return _finished;
 }
 
 /* Operador de desreferència.
    Pre:  Cert
    Post: Retorna el subconjunt apuntat per l'iterador;
    llança un error si l'iterador apunta al sentinella. */
-subset iter_subset::operator*() const throw()
+subset iter_subset::operator*() const throw(error)
 {
-   if (finished)
+   if (_finished)
    {
       throw error(IterSubsetIncorr);
    }
-   return current;
+   return _current;
 }
 
 /* Operador de preincrement.
@@ -70,14 +78,14 @@ subset iter_subset::operator*() const throw()
    no es produeix l'avançament si l'iterador ja apuntava al sentinella. */
 iter_subset &iter_subset::operator++() throw()
 {
-   if (finished)
+   if (_finished)
    {
       return *this;
    }
 
-   if (!next_combination(n))
+   if (!next_combination(_n))
    {
-      finished = true;
+      _finished = true;
    }
 
    return *this;
@@ -97,7 +105,7 @@ iter_subset iter_subset::operator++(int) throw()
 /* Operadors relacionals. */
 bool iter_subset::operator==(const iter_subset &c) const throw()
 {
-   return (finished == c.finished) && (current == c.current);
+   return (_finished == c._finished) && (_current == c._current);
 }
 bool iter_subset::operator!=(const iter_subset &c) const throw()
 {
@@ -112,11 +120,10 @@ bool iter_subset::operator!=(const iter_subset &c) const throw()
 
 */
 
-template <typename Iterator>
-bool next_combination(int n)
+bool iter_subset::next_combination(int n)
 {
-   int i = k - 1;
-   while (i >= 0 && current[i] == n - k + i + 1)
+   int i = _k - 1;
+   while (i >= 0 && _current[i] == n - _k + i + 1)
    {
       --i;
    }
@@ -126,10 +133,10 @@ bool next_combination(int n)
       return false;
    }
 
-   ++current[i];
-   for (int j = i + 1; j < k; ++j)
+   ++_current[i];
+   for (unsigned int j = i + 1; j < _k; ++j)
    {
-      current[j] = current[j - 1] + 1;
+      _current[j] = _current[j - 1] + 1;
    }
 
    return true;

@@ -1,8 +1,10 @@
-nat n;                     // Número total de elementos en el conjunto base {1, ..., n}.
-nat k;                     // Número de elementos en cada subconjunto.
-bool finished;             // Indica si se ha llegado al sentinela.
-std::vector<nat> current;  // El subconjunto actual representado como un vector de índices.
+nat _n;                     // Número total de elementos en el conjunto base {1, ..., n}.
+nat _k;                     // Número de elementos en cada subconjunto.
+bool _finished;             // Indica si se ha llegado al sentinela.
+std::vector<nat> _current;  // El subconjunto actual representado como un vector de índices.
 
 bool next_combination(int n);
 
 unsigned long long factorial(unsigned int n);
+
+friend int main(); // Declarar main como amigo para permitir el acceso a miembros privados
