@@ -37,7 +37,7 @@ void diccionari::clear(Node* node) {
 }
 
 // Còpia recursiva dels nodes
-Node* diccionari::copy(Node* node) const {
+diccionari::Node* diccionari::copy(Node* node) const {
     if (node == nullptr) return nullptr;
     Node* nou_node = new Node(node->paraula);
     nou_node->esquerre = copy(node->esquerre);
