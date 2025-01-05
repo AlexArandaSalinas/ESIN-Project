@@ -8,3 +8,4 @@ bool next_combination(int n);
 unsigned long long factorial(unsigned int n);
 
 friend int main(); // Declarar main como amigo para permitir el acceso a miembros privados
+friend void test_iter_subset(nat n, nat k);
