@@ -47,7 +47,7 @@ void anagrames::mateix_anagrama_canonic(const string &a, list<string> &L) const 
    {
       throw error(NoEsCanonic);
    }
-   auto it = _anagrames_map.find(a);
+   map<string, list<string> >::const_iterator it = _anagrames_map.find(a);
    if (it != _anagrames_map.end())
    {
       L = it->second;

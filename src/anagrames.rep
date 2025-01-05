@@ -1,2 +1,2 @@
 // Mapa que asocia un anagrama canònic amb una llista de paraules
-map<string, list<string>> _anagrames_map;
+map<string, list<string> > _anagrames_map;

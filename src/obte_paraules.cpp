@@ -19,9 +19,9 @@ void obte_paraules::obte_paraules(nat k, const string &s, const anagrames &A, li
    {
       const vector<nat> &subset = *it;
       string combination;
-      for (nat index : subset)
+      for (size_t i = 0; i < subset.size(); ++i)
       {
-         combination += s[index - 1];
+         combination += s[subset[i] - 1];
       }
       list<string> temp;
       A.mateix_anagrama_canonic(word_toolkit::anagrama_canonic(combination), temp);
@@ -37,4 +37,30 @@ void obte_paraules::obte_paraules(nat k, const string &s, const anagrames &A, li
    Llança un error si l'string s té menys de tres lletres. */
 void obte_paraules::obte_paraules(const string &s, const anagrames &A, list<string> &paraules) throw(error)
 {
+   if (s.length() < 3)
+   {
+      throw error(LongitudInvalida);
+   }
+
+   paraules.clear();
+   for (nat k = 3; k <= s.length(); ++k)
+   {
+      iter_subset it(s.length(), k);
+      while (!it.end())
+      {
+         const vector<nat> &subset = *it;
+         string combination;
+         for (size_t i = 0; i < subset.size(); ++i)
+         {
+            combination += s[subset[i] - 1];
+         }
+         list<string> temp;
+         A.mateix_anagrama_canonic(word_toolkit::anagrama_canonic(combination), temp);
+         paraules.insert(paraules.end(), temp.begin(), temp.end());
+         ++it;
+      }
+   }
+
+   paraules.sort();
+   paraules.unique();
 }
