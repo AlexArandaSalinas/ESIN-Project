@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -ansi -g
+CXXFLAGS = -Wall -ansi -g -lesin
 
 # Target executable
 TARGET = driver_joc_par

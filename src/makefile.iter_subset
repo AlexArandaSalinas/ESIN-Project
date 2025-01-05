@@ -1,0 +1,35 @@
+# Nombre del ejecutable
+TARGET = driver_iter_subset
+
+# Archivos fuente
+SRCS = iter_subset.cpp driver_iter_subset.cpp
+
+# Archivos objeto
+OBJS = $(SRCS:.cpp=.o)
+
+# Compilador y opciones
+CXX = g++
+CXXFLAGS = -Wall -ansi -g -lesin
+
+# Librerías
+LIBS = -lesin
+
+# Regla por defecto
+all: $(TARGET)
+
+# Enlazar los archivos objeto para crear el ejecutable
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+
+# Compilar los archivos fuente en archivos objeto
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Ejecutar el juego de prueba
+run: $(TARGET)
+	./$(TARGET) < jp1.in >& jp1.out
+	diff jp1.out jp1.res
+
+# Limpiar los archivos objeto y el ejecutable
+clean:
+	rm -f $(OBJS) $(TARGET) jp1.out
