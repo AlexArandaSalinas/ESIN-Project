@@ -87,9 +87,6 @@ void diccionari::llegeix(Node* node) const {
     llegeix(node->dret);
 }
 
-void diccionari::escriuArbre() const {
-    llegeix(root);
-}
 
 // Retorna el prefix més llarg que coincideix amb p
 string diccionari::prefix(const string& p) const throw(error) {
