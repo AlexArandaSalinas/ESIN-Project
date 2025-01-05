@@ -7,8 +7,8 @@ void test_iter_subset(nat n, nat k) {
     cout << "Testing iter_subset with n = " << n << " and k = " << k << endl;
     iter_subset it(n, k);
 
-    // Probar el operador de preincremento y el método is_finished
-    while (!it._finished) {
+    // Probar el operador de preincremento
+    while (!it.end()) {
         vector<nat> subset = *it;
         for (size_t i = 0; i < subset.size(); ++i) {
             cout << subset[i] << " ";
@@ -20,7 +20,7 @@ void test_iter_subset(nat n, nat k) {
     // Probar el operador de postincremento
     it = iter_subset(n, k); // Reiniciar el iterador
     cout << "Testing post-increment operator" << endl;
-    while (!it._finished) {
+    while (!it.end()) {
         vector<nat> subset = *it;
         for (size_t i = 0; i < subset.size(); ++i) {
             cout << subset[i] << " ";
