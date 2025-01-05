@@ -413,7 +413,7 @@ nat num_pal() const throw ();
 #endif
 
 
-## 6 La classeanagrames
+## 6 La classe anagrames
 
 Un objecte de la classeanagramesés un diccionari (per tant emmagatzema paraules
 i té operacions eficients per afegir noves paraules, determinar si una paraula és present o
