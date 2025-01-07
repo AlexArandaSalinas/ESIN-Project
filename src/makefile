@@ -1,6 +1,7 @@
 # Compiler and flags
-CXX = g++
-CXXFLAGS = -Wall -ansi -g -lesin
+CXX = g++-13
+CXXFLAGS = -Wall -ansi -std=c++11 -g
+LDFLAGS = -lesin
 
 # Target executable
 TARGET = driver_joc_par
@@ -28,7 +29,7 @@ all: $(TARGET)
 
 # Link object files to create the executable
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
 # Compile source files into object files
 %.o: %.cpp $(HEADERS)
