@@ -51,6 +51,8 @@ void anagrames::mateix_anagrama_canonic(const string &a, list<string> &L) const 
    if (it != _anagrames_map.end())
    {
       L = it->second;
+      L.sort();
+      L.unique();
    }
    else
    {
