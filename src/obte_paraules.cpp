@@ -29,7 +29,15 @@ void obte_paraules::obte_paraules(nat k, const string &s, const anagrames &A, li
       ++it;
    }
 
-   paraules.sort();
+   paraules.sort([](const string &a, const string &b)
+      {
+         if (a.length() != b.length())
+         {
+            return a.length() < b.length(); // Primero por longitud
+         }
+         return a < b; // Si tienen la misma longitud, orden lexicográfico
+      });
+
    paraules.unique();
 }
 
@@ -64,6 +72,27 @@ void obte_paraules::obte_paraules(const string &s, const anagrames &A, list<stri
       }
    }
 
-   paraules.sort();
+   paraules.sort([](const string &a, const string &b)
+      {
+         if (a.length() != b.length())
+         {
+            return a.length() < b.length(); // Primero por longitud
+         }
+         return a < b; // Si tienen la misma longitud, orden lexicográfico
+      });
+
    paraules.unique();
 }
+/*
+void sortList(list<string> &l)
+{
+   l.sort([](const string &a, const string &b)
+      {
+         if (a.length() != b.length())
+         {
+            return a.length() < b.length(); // Primero por longitud
+         }
+         return a < b; // Si tienen la misma longitud, orden lexicográfico
+      });
+} 
+*/
