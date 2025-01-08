@@ -2,6 +2,10 @@
 #include "iter_subset.hpp"
 #include "word_toolkit.hpp"
 
+// Ya que no hi ha un .rep, i no es poden modificar els .hpp, he posat aqui les funcions privades.
+bool comparar(const string &a, const string &b);
+void sortList(list<string> &paraules);
+
 /* Pre:  Cert
    Post: Retorna la llista de paraules que es poden formar usant k lletres
    de la paraula s. Llança error si k és major que la longitud de
@@ -29,14 +33,7 @@ void obte_paraules::obte_paraules(nat k, const string &s, const anagrames &A, li
       ++it;
    }
 
-   paraules.sort([](const string &a, const string &b)
-      {
-         if (a.length() != b.length())
-         {
-            return a.length() < b.length(); // Primero por longitud
-         }
-         return a < b; // Si tienen la misma longitud, orden lexicográfico
-      });
+   sortList(paraules);
 
    paraules.unique();
 }
@@ -72,27 +69,31 @@ void obte_paraules::obte_paraules(const string &s, const anagrames &A, list<stri
       }
    }
 
-   paraules.sort([](const string &a, const string &b)
-      {
-         if (a.length() != b.length())
-         {
-            return a.length() < b.length(); // Primero por longitud
-         }
-         return a < b; // Si tienen la misma longitud, orden lexicográfico
-      });
+   sortList(paraules);
 
    paraules.unique();
 }
+
+// Funciones privadas
+
 /*
+Pre: Cert
+Post: Devuelve true si la palabra 'a' es menor que la palabra 'b' tamaño.
+      Si tienen la misma longitud, se compara lexicográficamente.
+*/
+bool comparar(const string &a, const string &b)
+{
+   if (a.length() != b.length())
+   {
+      return a.length() < b.length(); // Primero por longitud
+   }
+   return a < b; // Si tienen la misma longitud, orden lexicográfico
+}
+
+/* Pre: Cert
+   Post: Ordena la lista de palabras 'l' de menor a mayor longitud y, en caso de empate,
+         de menor a mayor lexicográficamente */
 void sortList(list<string> &l)
 {
-   l.sort([](const string &a, const string &b)
-      {
-         if (a.length() != b.length())
-         {
-            return a.length() < b.length(); // Primero por longitud
-         }
-         return a < b; // Si tienen la misma longitud, orden lexicográfico
-      });
-} 
-*/
+   l.sort(comparar); // Usando la función de comparación
+}
