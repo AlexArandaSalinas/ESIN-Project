@@ -110,30 +110,33 @@ void diccionari::prefix_aux(Node* node, const string& p,
     prefix_aux(node->dret, p, prefix_mes_llarg, prefix_actual);
 }
 
-// Retorna una llista amb les paraules que compleixen el patró
 void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const throw(error) {
-    L.clear();
-    satisfan_patro_aux(root, q, L, "");
-}
+    L.clear();  // Ens assegurem que la llista està buida al principi
 
-void diccionari::satisfan_patro_aux(Node* node, const vector<string>& q, 
-                                    list<string>& L, string paraula_actual) const {
-    if (node == nullptr) return;
-    if (paraula_actual.size() == q.size()) {
-        bool compleix_patro = true;
-        for (size_t i = 0; i < q.size(); ++i) {
-            if (q[i].find(paraula_actual[i]) == string::npos) {
-                compleix_patro = false;
+    list<string> totes_les_paraules;
+    llista_paraules(q.size(), totes_les_paraules);
+
+    for (const auto& paraula : totes_les_paraules) {
+        // Comprova que la longitud de la paraula coincideixi amb el patró
+        if (paraula.size() != q.size()) {
+            continue;
+        }
+
+        bool coincideix = true;
+        for (size_t i = 0; i < paraula.size(); ++i) {
+            if (q[i].find(paraula[i]) == string::npos) {
+                coincideix = false;
                 break;
             }
         }
-        if (compleix_patro) L.push_back(paraula_actual);
-    } else {
-        satisfan_patro_aux(node->esquerre, q, L, paraula_actual);
-        satisfan_patro_aux(node->mig, q, L, paraula_actual + node->paraula);
-        satisfan_patro_aux(node->dret, q, L, paraula_actual);
+        if (coincideix) {
+            L.push_back(paraula);
+        }
     }
 }
+
+
+
 
 // Retorna una llista amb les paraules de longitud >= k
 void diccionari::llista_paraules(nat k, list<string>& L) const throw(error) {
