@@ -28,6 +28,9 @@ void obte_paraules::obte_paraules(nat k, const string &s, const anagrames &A, li
       paraules.insert(paraules.end(), temp.begin(), temp.end());
       ++it;
    }
+
+   paraules.sort();
+   paraules.unique();
 }
 
 /* Pre:  Cert
