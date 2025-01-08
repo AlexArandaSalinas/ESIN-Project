@@ -105,7 +105,9 @@ iter_subset iter_subset::operator++(int) throw()
 /* Operadors relacionals. */
 bool iter_subset::operator==(const iter_subset &c) const throw()
 {
-   return (_finished == c._finished) && (_current == c._current);
+   if((_k == 0 && c._k == 0) && (_finished == c._finished)) return true;
+
+   return (_n == c._n) && (_k == c._k) && (_finished == c._finished) && (_current == c._current);
 }
 bool iter_subset::operator!=(const iter_subset &c) const throw()
 {
@@ -140,31 +142,4 @@ bool iter_subset::next_combination(int n)
    }
 
    return true;
-}
-/*
-template <typename Iterator>
-bool next_combination(int n)
-{
-   int k = subset.size();
-   for (int i = k - 1; i >= 0; --i)
-   {
-      if (subset[i] < n - (k - i - 1))
-      {
-         ++subset[i];
-         for (int j = i + 1; j < k; ++j)
-         {
-            subset[j] = subset[j - 1] + 1;
-         }
-         return true; // Se generó una nueva combinación.
-      }
-   }
-   return false; // No hay más combinaciones posibles.
-}
-*/
-/* Pre: Entra un unsigned integer 'n'
-   Post: Retorna el factorial de n.
-*/
-unsigned long long iter_subset::factorial(unsigned int n)
-{
-   return n <= 1 ? 1 : n * factorial(n - 1);
 }
