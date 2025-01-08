@@ -2,6 +2,11 @@
 #include <algorithm>
 
 bool word_toolkit::es_canonic(const string &s) throw() {
+
+    if(s.length() == 0){
+        return true;
+    }
+
     for (unsigned int i = 0; i < s.length() - 1; i++) {
         if (s[i + 1] < s[i])
             return false;
