@@ -15,3 +15,4 @@
   void prefix_aux(Node* node, const string& p, string& prefix_mes_llarg, string prefix_actual) const;
   nat num_pal_aux(Node* node) const throw();
   void llista_paraules_aux(Node* node, nat k, list<string>& L) const ;
+  
