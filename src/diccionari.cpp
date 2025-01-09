@@ -46,35 +46,43 @@ diccionari::Node* diccionari::copy(Node* node) const {
     return nou_node;
 }
 
-// Insereix una paraula al diccionari
 void diccionari::insereix(const string& p) throw(error) {
     if (root == nullptr) {
         root = new Node(p);
+        
         return;
     }
+
     Node* node_actual = root;
-    for (size_t index = 0; index < p.size(); ++index) {
-        char c = p[index];
-        if (c < node_actual->paraula[0]) {
+    while (true) {
+        if (p < node_actual->paraula) {
             if (node_actual->esquerre == nullptr) {
                 node_actual->esquerre = new Node(p);
+                
                 return;
             }
             node_actual = node_actual->esquerre;
-        } else if (c == node_actual->paraula[0]) {
-            if (index == p.size() - 1 && node_actual->paraula == p) return;
-            if (node_actual->mig == nullptr) {
-                node_actual->mig = new Node(p);
-                return;
-            }
-            node_actual = node_actual->mig;
-        } else {
+        } else if (p > node_actual->paraula) {
             if (node_actual->dret == nullptr) {
                 node_actual->dret = new Node(p);
+                
                 return;
             }
             node_actual = node_actual->dret;
+        } else {
+            if (node_actual->paraula == p) {  
+            return;
+	    }
+	    
+            if (node_actual->mig == nullptr) {
+                node_actual->mig = new Node(p);
+                
+                return;
+            }
+            node_actual = node_actual->mig;
         }
+
+        
     }
 }
 
@@ -99,13 +107,21 @@ void diccionari::prefix_aux(Node* node, const string& p,
                             string& prefix_mes_llarg, string prefix_actual) const {
     if (node == nullptr) return;
 
-    // Comprovar si el prefix actual coincideix amb l'inici de p
-    if (p.find(prefix_actual) == 0) {
-        if (node->paraula != "" && p.find(node->paraula) == 0) {
-            prefix_mes_llarg = node->paraula;
+    // Actualizar el prefix_actual con la palabra del nodo actual
+    string nou_prefix_actual = prefix_actual + node->paraula;
+
+    // Comprovar si el nou_prefix_actual coincideix amb l'inici de p
+    if (p.find(nou_prefix_actual) == 0) {
+        // Actualitzar el prefix més llarg si coincideix amb el node actual
+        if (node->paraula != "" && p.find(nou_prefix_actual) == 0) {
+            prefix_mes_llarg = nou_prefix_actual;
         }
-        prefix_aux(node->mig, p, prefix_mes_llarg, prefix_actual + node->paraula);
+
+        // Continuar buscant en el node del mig
+        prefix_aux(node->mig, p, prefix_mes_llarg, nou_prefix_actual);
     }
+
+    // Continuar buscant en els nodes esquerre i dret
     prefix_aux(node->esquerre, p, prefix_mes_llarg, prefix_actual);
     prefix_aux(node->dret, p, prefix_mes_llarg, prefix_actual);
 }
