@@ -113,7 +113,7 @@ void diccionari::prefix_aux(Node* node, const string& p,
     // Comprovar si el nou_prefix_actual coincideix amb l'inici de p
     if (p.find(nou_prefix_actual) == 0) {
         // Actualitzar el prefix més llarg si coincideix amb el node actual
-        if (node->paraula != "" && p.find(nou_prefix_actual) == 0) {
+        if (node->paraula != "" && p.find(nou_prefix_actual) == 0 && nou_prefix_actual.size() > prefix_mes_llarg.size()) {
             prefix_mes_llarg = nou_prefix_actual;
         }
 
