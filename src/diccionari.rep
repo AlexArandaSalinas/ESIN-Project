@@ -1,18 +1,36 @@
 
   struct Node {
-    string paraula;
-    Node* esquerre;
-    Node* mig;
-    Node* dret;
+    string paraula; //Emmagatzema la paraula del diccionari.
+    Node* esquerre; //Apunta al fill esquerre
+    Node* mig;	    //Apunta al fill mig
+    Node* dret;	    //Apunta al fill dret
 
+   /* Constructor de Node
+   pre: cert
+   Post: Inicialitza un node amb paraula p i posa tots els punters a nullptr
+   */
     Node(const string& p) : paraula(p), esquerre(nullptr), mig(nullptr), dret(nullptr) {}
   };
   
-  Node* root;
-  void clear(Node* node);
-  Node* copy(Node* node) const;
-  void llegeix(Node* node) const;
+  Node* root; //Apunta a l'arrel del diccionari
+  
+  // Mètodes privats
+  void clear(Node* node); // Elimina recursivament els nodes a partir del node
+  
+  /* Pre: Cert
+   Post: Retorna una còpia de l'arbre apuntat per node. */
+  Node* copy(Node* node) const; // 
+ 
+ /* Pre: Cert
+   Post: Actualitza prefix_mes_llarg amb el prefix més llarg de p que es troba en l'arbre. */
   void prefix_aux(Node* node, const string& p, string& prefix_mes_llarg, string prefix_actual) const;
+  
+  /* Pre: Cert
+   Post: Retorna el nombre total de paraules en l'arbre apuntat per node. */
   nat num_pal_aux(Node* node) const throw();
+  
+  /* Pre: Cert
+   Post: Omple la llista L amb les paraules de l'arbre apuntat per node amb 
+   longitud ≥ k. */
   void llista_paraules_aux(Node* node, nat k, list<string>& L) const ;
   
