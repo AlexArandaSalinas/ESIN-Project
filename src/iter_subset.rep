@@ -3,4 +3,7 @@ nat _k;                     // Número de elementos en cada subconjunto.
 bool _finished;             // Indica si se ha llegado al sentinela.
 vector<nat> _current;  // El subconjunto actual representado como un vector de índices.
 
+/* Pre:  Cert
+   Post: Calcula la següent combinació de k elements de {1, ..., n};
+   retorna fals si ja no hi ha més combinacions possibles.*/
 bool next_combination(int n);
