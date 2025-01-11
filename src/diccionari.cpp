@@ -5,14 +5,17 @@
 #include <iterator>
 
 // Constructor
+// Cost: O(1), ja que només inicialitza l'arrel a nullptr.
 diccionari::diccionari() throw(error) : root(nullptr) {}
 
 // Constructor per còpia
+// Cost: O(n), on n és el nombre de nodes de l'arbre.
 diccionari::diccionari(const diccionari& D) throw(error) {
     root = copy(D.root);
 }
 
 // Operador d'assignació
+// Cost: O(n), on n és el nombre de nodes de l'arbre original i de l'arbre destí.
 diccionari& diccionari::operator=(const diccionari& D) throw(error) {
     if (this != &D) {
         clear(root);
@@ -27,6 +30,7 @@ diccionari::~diccionari() throw() {
 }
 
 // Elimina recursivament els nodes
+// Cost: O(n), on n és el nombre de nodes de l'arbre 
 void diccionari::clear(Node* node) {
     if (node != nullptr) {
         clear(node->esquerre);
@@ -37,6 +41,7 @@ void diccionari::clear(Node* node) {
 }
 
 // Còpia recursiva dels nodes
+// Cost: O(n), on n és el nombre de nodes de l'arbre 
 diccionari::Node* diccionari::copy(Node* node) const {
     if (node == nullptr) return nullptr;
     Node* nou_node = new Node(node->paraula);
@@ -46,6 +51,7 @@ diccionari::Node* diccionari::copy(Node* node) const {
     return nou_node;
 }
 
+// Cost: O(h), on h és l'alçada de l'arbre
 void diccionari::insereix(const string& p) throw(error) {
     if (root == nullptr) {
         root = new Node(p);
@@ -86,23 +92,17 @@ void diccionari::insereix(const string& p) throw(error) {
     }
 }
 
-// Llegeix i mostra les paraules de l'arbre en preordre
-void diccionari::llegeix(Node* node) const {
-    if (node == nullptr) return;
-    cout << node->paraula << " ";
-    llegeix(node->esquerre);
-    llegeix(node->mig);
-    llegeix(node->dret);
-}
 
 
 // Retorna el prefix més llarg que coincideix amb p
+// Cost: O(h), on h és l'alçada de l'arbre
 string diccionari::prefix(const string& p) const throw(error) {
     string prefix_mes_llarg = "";
     prefix_aux(root, p, prefix_mes_llarg, "");
     return prefix_mes_llarg;
 }
 
+// Cost: O(h), on h és l'alçada de l'arbre
 void diccionari::prefix_aux(Node* node, const string& p, 
                             string& prefix_mes_llarg, string prefix_actual) const {
     if (node == nullptr) return;
@@ -126,6 +126,7 @@ void diccionari::prefix_aux(Node* node, const string& p,
     prefix_aux(node->dret, p, prefix_mes_llarg, prefix_actual);
 }
 
+// Cost: O(n * m), on n és el nombre de nodes de l’arbre i m és la mida del patró q
 void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const throw(error) {
     L.clear();  // Ens assegurem que la llista està buida al principi
 
@@ -155,10 +156,12 @@ void diccionari::satisfan_patro(const vector<string>& q, list<string>& L) const 
 
 
 // Retorna una llista amb les paraules de longitud >= k
+// Cost: O(n), on n és el nombre de nodes de l’arbre
 void diccionari::llista_paraules(nat k, list<string>& L) const throw(error) {
     llista_paraules_aux(root, k, L);
 }
 
+// Cost: O(n), on n és el nombre de nodes de l'arbre.
 void diccionari::llista_paraules_aux(Node* node, nat k, list<string>& L) const {
     if (node == nullptr) return;
     llista_paraules_aux(node->esquerre, k, L);
@@ -168,10 +171,12 @@ void diccionari::llista_paraules_aux(Node* node, nat k, list<string>& L) const {
 }
 
 // Retorna el nombre total de paraules al diccionari
+// Cost: O(n), on n és el nombre de nodes de l’arbre
 nat diccionari::num_pal() const throw() {
     return num_pal_aux(root);
 }
 
+// Cost: O(n), on n és el nombre de nodes de l’arbre
 nat diccionari::num_pal_aux(Node* node) const throw() {
     if (node == nullptr) return 0;
     return num_pal_aux(node->esquerre) + 
