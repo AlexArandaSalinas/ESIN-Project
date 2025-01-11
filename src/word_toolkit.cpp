@@ -3,6 +3,9 @@
 #include <map>
 
 
+/* Cost: O(n)
+* El cost d'aquesta funció és O(n), on n és la longitud de l'string s.
+*/
 bool word_toolkit::es_canonic(const string &s) throw() {
 
     if(s.length() == 0){
@@ -16,20 +19,18 @@ bool word_toolkit::es_canonic(const string &s) throw() {
     return true;
 }
 
+/* Cost: O(n log n)
+* El cost d'aquesta funció és O(n log n), on n és la longitud de l'string s.
+*/
 string word_toolkit::anagrama_canonic(const string &s) throw() {
     string s_canon = s;
     sort(s_canon.begin(), s_canon.end());
     return s_canon;
 }
 
-/* Pre: L és una llista no buida de paraules formades exclusivament
-        amb lletres majúscules de la 'A' a la 'Z' (excloses la 'Ñ', 'Ç',
-        majúscules accentuades, ...). 
-   Post: Retorna el caràcter que no apareix a l'string excl i és
-        el més freqüent en la llista de paraules L.
-        En cas d'empat, es retornaria el caràcter alfabèticament menor.
-        Si l'string excl inclou totes les lletres de la 'A' a la 'Z' es 
-        retorna el caràcter '\0', és a dir, el caràcter de codi ASCII 0. */
+/* Cost: O(n)
+* El cost d'aquesta funció és O(n), on n és la longitud de la llista L. 
+*/
 char word_toolkit::mes_frequent(const string &excl, const list<string> &L) throw() {
     
     // Map para contar las frecuencias de las letras
