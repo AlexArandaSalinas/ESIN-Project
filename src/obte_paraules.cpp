@@ -2,6 +2,10 @@
 #include "iter_subset.hpp"
 #include "word_toolkit.hpp"
 
+// Ya que no hi ha un .rep, i no es poden modificar els .hpp, he posat aqui les funcions privades.
+bool comparar(const string &a, const string &b);
+void sortList(list<string> &paraules);
+
 /* Pre:  Cert
    Post: Retorna la llista de paraules que es poden formar usant k lletres
    de la paraula s. Llança error si k és major que la longitud de
@@ -31,6 +35,9 @@ void obte_paraules::obte_paraules(nat k, const string &s, const anagrames &A, li
       paraules.insert(paraules.end(), temp.begin(), temp.end());
       ++it;
    }
+
+   sortList(paraules);
+   paraules.unique();
 }
 
 /* Pre:  Cert
@@ -66,6 +73,30 @@ void obte_paraules::obte_paraules(const string &s, const anagrames &A, list<stri
       }
    }
 
-   paraules.sort();
+   sortList(paraules);
    paraules.unique();
+}
+
+/*
+Pre: Cert
+Post: Devuelve true si la palabra 'a' es menor que la palabra 'b' tamaño.
+      Si tienen la misma longitud, se compara lexicográficamente.
+Cost: O(min(n, m)), donde n y m son las longitudes de las cadenas comparadas
+*/
+bool comparar(const string &a, const string &b)
+{
+   if (a.length() != b.length())
+   {
+      return a.length() < b.length(); // Primero por longitud
+   }
+   return a < b; // Si tienen la misma longitud, orden lexicográfico
+}
+/* Pre: Cert
+   Post: Ordena la lista de palabras 'l' de menor a mayor longitud y, en caso de empate,
+         de menor a mayor lexicográficamente
+   Cost: O(N log N * min(n, m)), donde N es el número de elementos en la lista y n y m 
+         son las longitudes de las cadenas comparadas. */
+void sortList(list<string> &l)
+{
+   l.sort(comparar);
 }
